@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 using namespace std;
 
 class Weapon {
@@ -28,6 +29,43 @@ public:
         cout << "Max number bullets in magazine: " << maxNumBullet << endl;
     }
 
+    void Initialize(int range, float caliber, int maxSize) {
+        this->shotRange = range;
+        this->caliber = caliber;
+        this->maxNumBullet = maxSize;
+    }
+
+    bool Shot() {
+        if (numBullet <= 0) {
+            cout << "\nNo bullets!!\n";
+            return false;
+        }
+        else {
+            --numBullet;
+            return true;
+        }
+    }
+
+    void Recharge() {
+        if (numBullet == maxNumBullet) {
+            cout << "\nMagazine is full!!\n";
+        }
+        else {
+            numBullet = maxNumBullet;
+        }
+    }
+
+    void Save() {
+        ofstream file;
+        file.open("file.txt");
+        file << "\n_______ WEAPON ________" << endl;
+        file << "Shot range: " << shotRange << endl;
+        file << "Caliber bullets: " << caliber << endl;
+        file << "Number bullets: " << numBullet << endl;
+        file << "Max number bullets in magazine: " << maxNumBullet << endl;
+
+    }
+
 };
 
 int main()
@@ -35,6 +73,19 @@ int main()
     Weapon ww(909, 5.7, 19, 32);
     ww.Show();
     
+    ww.Recharge();
+    ww.Show();
 
+    ww.Shot();
+    ww.Show();
+
+    ww.Shot();
+    ww.Show();
+
+    ww.Recharge();
+    ww.Show();
+
+
+    ww.Save();
 
 }
